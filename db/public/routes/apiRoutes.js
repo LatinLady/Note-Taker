@@ -1,4 +1,4 @@
-var db = require("../db/db.json");
+var db = require("../db.json");
 var fs = require("fs");
 
 // ROUTING
