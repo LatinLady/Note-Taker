@@ -8,11 +8,6 @@ const fs = require("fs");
 // ROUTING
 // ==============================================================================
 
-// ==============================================================================
-// API GET Request
-// Below code handles refresh events when a user loads/reloads, saves, and deletes a note.
-// This route simply reads data from db.json and returns it to be displayed.
-// ==============================================================================
 router.get("/notes", function(req, res) {
 
     // Use fs.readFile to access data in db.json
