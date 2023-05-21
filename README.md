@@ -1,4 +1,5 @@
 # Note Taker 
+This aplication is a Note Taker the user is avialable in create a list and delete, this app is create with Express.js
 
 ## User Story
 AS A small business owner
@@ -27,4 +28,5 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 Heroku URL https://taker1.herokuapp.com/
 Github URL 
 
-
+## Video
+https://drive.google.com/file/d/12LFCnXdlcXx7gm_TMrUfLgSozG-hwNM4/view
