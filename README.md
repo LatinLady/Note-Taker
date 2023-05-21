@@ -24,5 +24,7 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 <img width="960" alt="2023-05-20" src="https://github.com/LatinLady/Note-Taker/assets/118027404/211f80fb-c249-4d51-b536-7f2459c24e97">
 
 ## Deployment
+Heroku URL https://taker1.herokuapp.com/
+Github URL 
 
 
