@@ -1,21 +1,15 @@
-// ==============================================================================
-// LOAD MODULES
-// ==============================================================================
-const path = require("path");
-const router = require("express").Router();
+var path = require("path");
 
-// ==============================================================================
-// Default HTML GET Requests
-// ==============================================================================
-router.get("*", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
-});
+module.exports = function (app) {
+  // HTML GET Requests
+  // Below code handles when users "visit" a page.
 
-// ==============================================================================
-// Notes HTML GET Requests - Uses apiRoutes as extension
-// ==============================================================================
-router.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "../public/notes.html"));
-});
+  app.get("/notes", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/notes.html"));
+  });
 
-module.exports = router;
+  // If no matching route is found default to home
+  app.get("*", function (req, res) {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+};

@@ -1,111 +1,41 @@
-// ==============================================================================
-// LOAD MODULES
-// ==============================================================================
-const router = require("express").Router();
-const fs = require("fs");
+var db = require("../db/db.json");
+var fs = require("fs");
 
-// ==============================================================================
 // ROUTING
-// ==============================================================================
 
-router.get("/notes", function(req, res) {
+module.exports = function (app) {
+  // API GET Request
+  app.get("/api/notes", function (req, res) {
+    // Read the db.json file and return all saved notes as JSON
+    res.json(db);
+  });
 
-    // Use fs.readFile to access data in db.json
-    fs.readFile("./db/db.json", "utf8", function(err, data) {
-        
-        // Throw error code of there was issue reading db.json
-        if (err) throw err;
-
-        // Pass parsed data from db.json as response to be rendered in index.js 
-        res.json(JSON.parse(data));
-
+  // API POST Request
+  app.post("/api/notes", function (req, res) {
+    // Receive a new note to save on the request body, add it to the db.json file
+    db.push(req.body);
+    // Add unique id to each note
+    db.forEach((obj, i) => {
+      obj.id = i + 1;
     });
-
-});
-
-// ==============================================================================
-// API POST Request
-// Below code handles when a user saves a note and writes data to db.json.
-// ==============================================================================
-router.post("/notes", function(req, res) {
-
-    // Use fs.readFile to access data in db.json
-    fs.readFile("./db/db.json", "utf8", function(err, data) {
-
-        // Throw error code of there was issue reading db.json
-        if (err) throw err;
-
-        // Parse and store db.json data to raw
-        let raw = JSON.parse(data);
-
-        // Push user's new note content to raw
-        raw.push(req.body);
-
-        // Use fs.writeFile to write raw array data to db.json  
-        fs.writeFile("./db/db.json", JSON.stringify(raw), function(err) {
-
-            // Throw error code of there was issue writing to db.json
-            if(err) return err;
-
-            // log "write success" to console/terminal
-            console.log("write success");
-
-        });
-
+    // Return the new note to the client
+    fs.writeFile("./db/db.json", JSON.stringify(db), function () {
+      res.json(db);
     });
+  });
 
-    // End response process
-    res.end();
-
-});
-
-// ==============================================================================
-// API DELETE Request
-// Below code handles when a user deletes a note and writes data to db.json.
-// ==============================================================================
-router.delete("/notes/:id", function(req, res) {
-
-    // Store id of user-selected note for deletion 
-    let id = req.params.id;
-
-    // Use fs.readFile to access data in db.json
-    fs.readFile("./db/db.json", "utf8", function(err, data) {
-
-        // Throw error code of there was issue reading db.json
-        if (err) throw err;
-
-        // Parse and store db.json data to raw
-        let raw = JSON.parse(data);
-
-        // Loop through the entirity of raw
-        for (let i = 0; i < raw.length; i++) {
-
-            // See if the user selected id matches any of the id's in raw
-            if (id == raw[i].id) {
-
-                // If the id's match, splice the indexed note out of raw 
-                raw.splice(i,1);
-
-                // Use fs.writeFile to write raw array data to db.json  
-                fs.writeFile("./db/db.json", JSON.stringify(raw), function(err) {
-
-                    // Throw error code of there was issue reading db.json
-                    if (err) throw err;
-
-                    // log "note deleted" to console/terminal
-                    console.log("note deleted");
-
-                });
-
-            };
-
-        };
-
+  // // API DELETE Request
+  app.delete("/api/notes/:id", function (req, res) {
+    var id = req.params.id;
+    // Use splice to delete the selected note from the db array
+    db.splice(id - 1, 1);
+    // Reassign id for each note object
+    db.forEach((obj, i) => {
+      obj.id = i + 1;
     });
-    
-    // End response process
-    res.end(); 
-
-});
-
-module.exports = router;
+    // Return the remaining notes to the client
+    fs.writeFile("./db/db.json", JSON.stringify(db), function () {
+      res.json(db);
+    });
+  });
+};
