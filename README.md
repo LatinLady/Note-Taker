@@ -19,3 +19,8 @@ WHEN I click on an existing note in the list in the left-hand column
 THEN that note appears in the right-hand column
 WHEN I click on the Write icon in the navigation at the top of the page
 THEN I am presented with empty fields to enter a new note title and the note’s text in the right-hand column
+
+## Image
+<img width="960" alt="2023-05-20" src="https://github.com/LatinLady/Note-Taker/assets/118027404/211f80fb-c249-4d51-b536-7f2459c24e97">
+
+
